@@ -1,0 +1,10 @@
+import sklearn.preprocessing import StandarScaler #untuk normalisasi/scaling angka
+from sklearn.linear_model import LinearRegression #model machine learning untuk prediksi angka
+
+Interpretasi
+R² Score	Arti
+1.0	sempurna
+0.9	sangat bagus
+0.7	bagus
+0.5	lumayan
+0	jelek
