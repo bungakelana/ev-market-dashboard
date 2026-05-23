@@ -12,7 +12,6 @@ from scripts.logic import get_kpi
 from main_page import ml_page
 from main_page import aboutme_page
 from main_page import home_page
-#from main_page import me
 
 # CONFIG HARUS PALING ATAS
 st.set_page_config(

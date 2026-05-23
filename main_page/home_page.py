@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from plotly.graph_objs._figure import Figure
 import seaborn as sns
 import streamlit as st
-from streamlit_option_menu import option_menu
 import plotly.express as px
 import joblib
 import base64
@@ -33,7 +32,6 @@ def show():
 #KPI STYLE
     st.markdown("""
     <style>
-
     div[data-testid="stMetric"] {
         background: rgba(240,248,255,0.65);
         border: 1px solid rgba(255,255,255,0.5);
@@ -51,42 +49,61 @@ def show():
         box-shadow: 0 12px 40px rgba(31,38,135,0.25);
     }
     
-    </style>
-    """, unsafe_allow_html=True)
+        /* KPI VALUE */
+    div[data-testid="stMetricValue"] {
+        color: #111827 !important;
+        font-size: 40px !important;
+        font-weight: 700 !important;
+    }
 
-# CSS background
-    page_bg = f"""
-    <style>
+    /* KPI LABEL */
+    div[data-testid="stMetricLabel"] {
+        color: #1F2937 !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+    }
 
-    .stApp {{
-        background-image:
-        linear-gradient(rgba(240,248,255,0.75),
-                        rgba(220,235,255,0.85)),
-        url("data:image/jpeg;base64,{img}");
+    /* KPI DELTA */
+    div[data-testid="stMetricDelta"] {
+        color: #111827 !important;
+    }
+        
+        </style>
+        """, unsafe_allow_html=True)
 
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
+    # CSS background
+    page_bg: str = f"""
+        <style>
 
-    [data-testid="stSidebar"] {{
-        background: rgba(255,255,255,0.25);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        .stApp {{
+            background-image:
+            linear-gradient(rgba(240,248,255,0.75),
+                            rgba(220,235,255,0.85)),
+            url("data:image/jpeg;base64,{img}");
 
-        border-right: 1px solid rgba(255,255,255,0.3);
-    }}
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
 
-    div[data-testid="metric-container"] {{
-        background: rgba(255,255,255,0.25);
-        border: 1px solid rgba(255,255,255,0.3);
-        padding: 15px;
-        border-radius: 20px;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 8px 32px rgba(31,38,135,0.15);
-    }}
+        [data-testid="stSidebar"] {{
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }}
+
+        div[data-testid="metric-container"] {{
+            background: rgba(255,255,255,0.25);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(31,38,135,0.15);
+        }}
     </style>
     """
 
@@ -212,7 +229,7 @@ def show():
 
         # KPI Metrics
         kpi = get_kpi(filtered_df)
-        col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+        col1, col2, col3, col4 = st.columns(4, gap="medium")
 
         with col1:
             #with st.container(border=True):
@@ -242,6 +259,7 @@ def show():
                     f"🚘{kpi['top_model']['model'].iloc[0]}"
                 )
 
+        col5, col6, col7 = st.columns(3, gap="medium")
         with col5:
             #with st.container(border=True):
                 st.metric(
